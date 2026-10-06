@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dota 2 Randomizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Dota 2 Randomizer <span class="info" title="Every hero gets boots, except Centaur and Io.">ⓘ</span></h1>
+    </header>
+
+    <p id="error" class="error" hidden></p>
+
+    <section id="result" hidden>
+      <div class="hero">
+        <img id="hero-icon" alt="">
+        <h2 id="hero-name"></h2>
+      </div>
+
+      <ul id="build" class="build"></ul>
+
+      <div class="actions">
+        <button id="roll-all" class="primary">Randomize</button>
+        <button id="roll-hero">Reroll hero</button>
+        <button id="roll-build">Reroll build</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
