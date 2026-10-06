@@ -1,6 +1,8 @@
 const HEROES_URL = 'data/heroes.json';
 const ITEMS_URL = 'data/items.json';
 const BUILD_SIZE = 6;
+// Heroes that never get boots; every other hero gets exactly one pair.
+const NO_BOOTS_HEROES = ['centaur'];
 
 const els = {
   error: document.getElementById('error'),
@@ -16,6 +18,10 @@ const els = {
 let heroes = [];
 let items = [];
 let currentHero = null;
+let currentBuild = [];
+
+const needsBoots = (hero) => !NO_BOOTS_HEROES.includes(hero.id);
+const hasBoots = (build) => build.some((item) => item.boots);
 
 function randomHero() {
   // Avoid showing the same hero twice in a row.
@@ -23,17 +29,19 @@ function randomHero() {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// Six unique items, with at most one pair of boots.
-function randomBuild() {
-  const pool = [...items];
+// Six unique items: exactly one pair of boots, or none for NO_BOOTS_HEROES.
+function randomBuild(hero) {
+  const pool = items.filter((item) => !item.boots);
   const build = [];
-  let hasBoots = false;
 
   while (build.length < BUILD_SIZE && pool.length > 0) {
-    const [item] = pool.splice(Math.floor(Math.random() * pool.length), 1);
-    if (item.boots && hasBoots) continue;
-    hasBoots = hasBoots || item.boots;
-    build.push(item);
+    build.push(...pool.splice(Math.floor(Math.random() * pool.length), 1));
+  }
+
+  const boots = items.filter((item) => item.boots);
+  if (needsBoots(hero) && boots.length > 0) {
+    const slot = Math.floor(Math.random() * BUILD_SIZE);
+    build[slot] = boots[Math.floor(Math.random() * boots.length)];
   }
 
   return build;
@@ -51,11 +59,17 @@ function renderHero() {
   els.heroIcon.alt = currentHero.name;
   els.heroName.textContent = currentHero.name;
   replay(els.heroIcon);
+
+  // Keep an existing build valid for the new hero.
+  if (currentBuild.length > 0 && needsBoots(currentHero) !== hasBoots(currentBuild)) {
+    renderBuild();
+  }
 }
 
 function renderBuild() {
+  currentBuild = randomBuild(currentHero);
   els.build.replaceChildren(
-    ...randomBuild().map((item) => {
+    ...currentBuild.map((item) => {
       const li = document.createElement('li');
       li.className = 'pop';
 

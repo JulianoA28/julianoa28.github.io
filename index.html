@@ -4,12 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dota 2 Randomizer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
     <header>
-      <h1>Dota 2 Randomizer <span class="info" title="Every hero gets boots, except Centaur and Io.">ⓘ</span></h1>
+      <h1>
+        Dota 2 Randomizer
+        <span class="info" tabindex="0" role="img" aria-label="Rules: every hero gets exactly one pair of boots, except Centaur Warrunner, who gets none." data-tip="Every hero gets exactly one pair of boots, except Centaur Warrunner, who gets none.">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 11v6"/>
+            <path d="M12 7h.01"/>
+          </svg>
+        </span>
+      </h1>
     </header>
 
     <p id="error" class="error" hidden></p>

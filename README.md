@@ -12,7 +12,8 @@ Site de página única, sem backend, que sorteia um herói aleatório de Dota 2 
 ## Regras do sorteio
 
 - A build tem sempre 6 itens, sem repetição
-- No máximo uma bota por build
+- Todo herói recebe exatamente uma bota, exceto o Centaur Warrunner, que não recebe nenhuma
+- Ao trocar apenas o herói, a build é sorteada de novo se deixar de respeitar a regra das botas
 
 ## Como executar
 
@@ -30,6 +31,7 @@ Qualquer servidor de arquivos estáticos funciona (por exemplo `npx serve`), ass
 
 ```
 index.html        Página
+favicon.svg       Ícone da aba
 style.css         Estilos
 app.js            Lógica do sorteio e renderização
 data/heroes.json  Lista de heróis

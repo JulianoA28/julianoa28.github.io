@@ -27,11 +27,68 @@ main {
   text-align: center;
 }
 
+header {
+  margin-bottom: 32px;
+}
+
 h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   margin: 0;
   font-size: 2rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.info {
+  position: relative;
+  display: inline-flex;
+  color: var(--muted);
+  cursor: help;
+  outline: none;
+  transition: color 0.15s;
+}
+
+.info:hover,
+.info:focus {
+  color: var(--text);
+}
+
+.info svg {
+  width: 22px;
+  height: 22px;
+}
+
+.info::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 10px);
+  right: -8px;
+  z-index: 1;
+  width: 240px;
+  max-width: 80vw;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.info:hover::after,
+.info:focus::after {
+  opacity: 1;
 }
 
 header p {
