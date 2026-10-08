@@ -8,11 +8,13 @@ Site de página única, sem backend, que sorteia um herói aleatório de Dota 2 
 - **Randomize**: sorteia herói e build novamente
 - **Reroll hero**: troca apenas o herói (nunca repete o herói atual)
 - **Reroll build**: troca apenas os itens
+- **Hand of Midas**: quando sorteada, o ícone é clicável e troca a Midas por outro item aleatório; o item que entra fica com uma borda dourada
 
 ## Regras do sorteio
 
 - A build tem sempre 6 itens, sem repetição
-- Todo herói recebe exatamente uma bota, exceto o Centaur Warrunner, que não recebe nenhuma
+- Todo herói recebe uma Boots of Travel, exceto o Centaur Warrunner, que não recebe nenhuma
+- Guardian Greaves e Boots of Bearing contam como itens comuns: qualquer herói, inclusive o Centaur, pode recebê-las
 - Ao trocar apenas o herói, a build é sorteada de novo se deixar de respeitar a regra das botas
 
 ## Como executar
@@ -51,7 +53,7 @@ Os heróis e itens ficam em dois arquivos JSON, que podem ser editados livrement
 `data/items.json`:
 
 ```json
-{ "id": "phase_boots", "name": "Phase Boots", "boots": true, "icon": "https://.../items/phase_boots.png" }
+{ "id": "travel_boots", "name": "Boots of Travel", "boots": true, "icon": "https://.../items/travel_boots.png" }
 ```
 
 | Campo   | Descrição                                                    |
@@ -59,7 +61,7 @@ Os heróis e itens ficam em dois arquivos JSON, que podem ser editados livrement
 | `id`    | Nome interno do herói ou item no Dota 2                      |
 | `name`  | Nome exibido na página                                       |
 | `icon`  | URL (ou caminho local) da imagem                             |
-| `boots` | Apenas em itens: `true` se o item for uma bota               |
+| `boots` | Apenas em itens: `true` se o item entra na regra das botas   |
 
 A lista de itens contém somente itens completos: componentes, consumíveis e itens neutros ficam de fora.
 

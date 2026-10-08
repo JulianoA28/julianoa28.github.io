@@ -6,6 +6,7 @@
   --muted: #8b93a1;
   --accent: #c23c2a;
   --accent-hover: #dd4a36;
+  --gold: #d4af37;
 }
 
 * {
@@ -135,6 +136,28 @@ header p {
   object-fit: cover;
   border-radius: 4px;
   background: var(--bg);
+}
+
+.build li.from-midas {
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+}
+
+.build .swap {
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 4px;
+}
+
+.build .swap img {
+  display: block;
+  transition: box-shadow 0.15s;
+}
+
+.build .swap:hover img,
+.build .swap:focus-visible img {
+  box-shadow: 0 0 0 2px var(--gold);
 }
 
 .build span {

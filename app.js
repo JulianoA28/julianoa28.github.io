@@ -3,6 +3,8 @@ const ITEMS_URL = 'data/items.json';
 const BUILD_SIZE = 6;
 // Heroes that never get boots; every other hero gets exactly one pair.
 const NO_BOOTS_HEROES = ['centaur'];
+// A rolled Hand of Midas can be clicked to swap it for another item.
+const MIDAS_ID = 'hand_of_midas';
 
 const els = {
   error: document.getElementById('error'),
@@ -19,6 +21,8 @@ let heroes = [];
 let items = [];
 let currentHero = null;
 let currentBuild = [];
+// Slots whose item replaced a Hand of Midas.
+const midasSlots = new Set();
 
 const needsBoots = (hero) => !NO_BOOTS_HEROES.includes(hero.id);
 const hasBoots = (build) => build.some((item) => item.boots);
@@ -66,24 +70,49 @@ function renderHero() {
   }
 }
 
+function buildSlot(slot) {
+  const item = currentBuild[slot];
+  const li = document.createElement('li');
+  li.className = 'pop';
+  li.classList.toggle('from-midas', midasSlots.has(slot));
+
+  const img = document.createElement('img');
+  img.src = item.icon;
+  img.alt = item.name;
+
+  const name = document.createElement('span');
+  name.textContent = item.name;
+
+  if (item.id === MIDAS_ID) {
+    const button = document.createElement('button');
+    button.className = 'swap';
+    button.title = 'Click to swap for another item';
+    button.addEventListener('click', () => replaceMidas(slot));
+    button.append(img);
+    li.append(button, name);
+  } else {
+    li.append(img, name);
+  }
+
+  return li;
+}
+
+// Swaps a Hand of Midas for a random item that keeps the build valid.
+function replaceMidas(slot) {
+  const pool = items.filter(
+    (item) => !item.boots && item.id !== MIDAS_ID && !currentBuild.includes(item)
+  );
+  if (pool.length === 0) return;
+
+  currentBuild[slot] = pool[Math.floor(Math.random() * pool.length)];
+  midasSlots.add(slot);
+  els.build.children[slot].replaceWith(buildSlot(slot));
+}
+
 function renderBuild() {
   currentBuild = randomBuild(currentHero);
-  els.build.replaceChildren(
-    ...currentBuild.map((item) => {
-      const li = document.createElement('li');
-      li.className = 'pop';
-
-      const img = document.createElement('img');
-      img.src = item.icon;
-      img.alt = item.name;
-
-      const name = document.createElement('span');
-      name.textContent = item.name;
-
-      li.append(img, name);
-      return li;
-    })
-  );
+  midasSlots.clear();
+  els.build.replaceChildren(...currentBuild.map((_, slot) => buildSlot(slot)));
 }
 
 function showError(message) {
